@@ -2,16 +2,18 @@
   <div id="app">
     <div id="game">
       <div id="top-row">
-        <button @mousedown="toneButtonPushed(0)" id="but-0" class="tone-button"></button>
-        <button @mousedown="toneButtonPushed(1)" id="but-1" class="tone-button"></button>
+        <button @mousedown="toneButtonPushed(0)" v-bind:class="{ pushed: but0Pushed }" id="but-0" class="tone-button"></button>
+        <button @mousedown="toneButtonPushed(1)" v-bind:class="{ pushed: but1Pushed }" id="but-1" class="tone-button"></button>
       </div>
       <div id="middle-row">
-        
-
+        <p>{{ compTones.length }}</p>
+        <button v-on:click="initGame">Reset</button>
+        <p>{{ strictLabel }}</p>
+        <button v-on:click="toggleStrict">Strict</button>
       </div>
       <div id="bottom-row">
-        <button @mousedown="toneButtonPushed(2)" id="but-2" class="tone-button"></button>
-        <button @mousedown="toneButtonPushed(3)" id="but-3" class="tone-button"></button>
+        <button @mousedown="toneButtonPushed(2)" v-bind:class="{ pushed: but2Pushed }" id="but-2" class="tone-button"></button>
+        <button @mousedown="toneButtonPushed(3)" v-bind:class="{ pushed: but3Pushed }" id="but-3" class="tone-button"></button>
       </div>
     </div>
     <audio ref="simonSound0" src="/static/simonSound0.mp3"></audio>
@@ -29,21 +31,59 @@ export default {
   data: function () {
     return {
       compTones: [],
-      playerTones: [],
       playerTone: 0,
       compTurn: true,
       intervalID: '',
-      onLoad: this.initGame()
+      but0Pushed: false,
+      but1Pushed: false,
+      but2Pushed: false,
+      but3Pushed: false,
+      strict: false,
+      winLevel: 3
     }
+  },
+  computed: {
+    strictLabel: function () {
+      return this.strict ? 'Strict' : 'Easy'
+    }
+  },
+  mounted: function () {
+    setTimeout(this.initGame, 0)
   },
   methods: {
     toneButtonPushed: function (buttonPushed) {
-      const toneName = 'simonSound' + buttonPushed.toString()
-      this.$refs[toneName].play()
+      if (this.compTurn === false) {
+        if (buttonPushed === this.compTones[this.playerTone]) {
+          const toneName = 'simonSound' + buttonPushed.toString()
+          this.$refs[toneName].play()
+          if (this.playerTone === this.compTones.length - 1) {
+            if (this.compTones.length === this.winLevel) {
+              alert('YOU WIN!')
+              this.initGame()
+            } else this.toggleTurn()
+          } else {
+            this.playerTone++
+          }
+        } else {
+          if (this.strict === true) {
+            this.$refs.wrong.play()
+            this.initGame()
+          } else {
+            this.$refs.wrong.play()
+            this.compTurn = true
+            this.showTones()
+          }
+        }
+      } else {
+        this.$refs.wrong.play()
+      }
+    },
+    toggleStrict: function () {
+      this.strict = !this.strict
+      this.initGame()
     },
     initGame: function () {
       this.compTones = []
-      this.playerTones = []
       this.playerTurn = 0
       this.compTurn = true
       this.addTone()
@@ -51,13 +91,31 @@ export default {
     },
     showTones: function () {
       let gen = this.getNextTone()
-      this.intervalID = setInterval(this.showTone(gen.next()), 1000)
+      this.intervalID = setInterval(() => {
+        this.showTone(gen.next())
+      }, 1000)
     },
     showTone: function (tone) {
-      console.log(tone)
       const toneName = 'simonSound' + tone.value.toString()
-      console.log(toneName)
+      this.toneToggle(tone.value)
       this.$refs[toneName].play()
+      setTimeout(() => {
+        this.toneToggle(tone.value)
+      }, 500)
+      if (tone.done === true) {
+        this.stopTones()
+        this.toggleTurn()
+      }
+    },
+    toggleTurn: function () {
+      if (this.compTurn === false) {
+        this.compTurn = true
+        this.addTone()
+        this.showTones()
+      } else {
+        this.compTurn = false
+        this.playerTone = 0
+      }
     },
     addTone: function () {
       this.compTones.push(Math.floor(Math.random() * 3))
@@ -71,6 +129,10 @@ export default {
     },
     stopTones: function () {
       clearInterval(this.intervalID)
+    },
+    toneToggle: function (tone) {
+      const butProp = 'but' + tone + 'Pushed'
+      this[butProp] ? this[butProp] = false : this[butProp] = true
     }
   }
 }
@@ -107,12 +169,16 @@ export default {
   height: 200px;
   border-radius: 50%;
   border: none;
-  box-shadow: 5px 5px 10px black;
+  box-shadow: 10px 10px 20px black;
   margin: 20px;
   outline: none;
 }
 
+.pushed {
+  box-shadow: 3px 3px 8px black;
+}
+
 .tone-button:active {
-  box-shadow: 1px 1px 1px black;
+  box-shadow: 3px 3px 8px black;
 }
 </style>
