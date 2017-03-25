@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import 'font-awesome-webpack'
+import 'vue-awesome/icons'
 
 Vue.config.productionTip = false
 
