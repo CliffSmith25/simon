@@ -2,16 +2,16 @@
   <div id="app">
     <div id="game">
       <div id="top-row">
-        <icon name="arrow-left" class="but-0" v-bind:class="{ active: pushed0 }" aria-hidden="true" @mousedown="toneButtonPushed(0)"></icon>
-        <icon name="arrow-left" class="but-1" v-bind:class="{ active: pushed1 }" aria-hidden="true" @mousedown="toneButtonPushed(1)"></icon>
+        <div @mousedown="toneButtonPushed(0)"><icon name="arrow-left" class="icon but-0" v-bind:class="{ active: pushed0 }"></icon></div>
+        <div @mousedown="toneButtonPushed(1)"><icon name="arrow-left" class="icon but-1" v-bind:class="{ active: pushed1 }"></icon></div>
       </div>
       <div id="middle-row">
           <button class="level" v-on:click="initGame">{{ compTones.length }}</button>
           <button class="strictButton" v-on:click="toggleStrict" v-bind:class="{ strict: strict }">{{ strictLabel }}</button>
       </div>
       <div id="bottom-row">
-        <icon name="arrow-left" class="but-2" v-bind:class="{ active: pushed2 }" aria-hidden="true" @mousedown="toneButtonPushed(2)"></icon>
-        <icon name="arrow-left" class="but-3" v-bind:class="{ active: pushed3 }" aria-hidden="true" @mousedown="toneButtonPushed(3)"></icon>
+        <div @mousedown="toneButtonPushed(2)"><icon name="arrow-left" class="icon but-2" v-bind:class="{ active: pushed2 }"></icon></div>
+        <div @mousedown="toneButtonPushed(3)"><icon name="arrow-left" class="icon but-3" v-bind:class="{ active: pushed3 }"></icon></div>
       </div>
       <h1>{{ msg }}</h1>
     </div>
@@ -57,7 +57,6 @@ export default {
   },
   methods: {
     toneButtonPushed: function (buttonPushed) {
-      console.log('hit')
       if (this.compTurn === false) {
         if (buttonPushed === this.compTones[this.playerTone]) {
           const toneName = 'simonSound' + buttonPushed.toString()
@@ -264,7 +263,7 @@ h1 {
   left: 70px;
 }
 
-i:hover {
+.icon:hover {
   cursor: pointer;
 }
 
