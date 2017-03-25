@@ -14,6 +14,7 @@
         <div @mousedown="toneButtonPushed(3)"><icon name="arrow-left" class="icon but-3" v-bind:class="{ active: pushed3 }"></icon></div>
       </div>
       <h1>{{ msg }}</h1>
+      <a href="https://github.com/CliffSmith25/simon">View the source code here</a>
     </div>
     <audio ref="simonSound0" src="/static/simonSound0.mp3"></audio>
     <audio ref="simonSound1" src="/static/simonSound1.mp3"></audio>
@@ -143,6 +144,13 @@ export default {
 </script>
 
 <style>
+
+a {
+  text-align: center;
+  position: absolute;
+  top: 380px;
+  left: 70px;  
+}
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
