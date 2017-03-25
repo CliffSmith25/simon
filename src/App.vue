@@ -2,19 +2,18 @@
   <div id="app">
     <div id="game">
       <div id="top-row">
-        <button @mousedown="toneButtonPushed(0)" v-bind:class="{ pushed: but0Pushed }" id="but-0" class="tone-button"></button>
-        <button @mousedown="toneButtonPushed(1)" v-bind:class="{ pushed: but1Pushed }" id="but-1" class="tone-button"></button>
+        <i class="fa fa-arrow-left but-0" v-bind:class="{ active: pushed0 }" aria-hidden="true" @mousedown="toneButtonPushed(0)"></i>
+        <i class="fa fa-arrow-left but-1" v-bind:class="{ active: pushed1 }" aria-hidden="true" @mousedown="toneButtonPushed(1)"></i>
       </div>
       <div id="middle-row">
-        <p>{{ compTones.length }}</p>
-        <button v-on:click="initGame">Reset</button>
-        <p>{{ strictLabel }}</p>
-        <button v-on:click="toggleStrict">Strict</button>
+          <button class="level" v-on:click="initGame">{{ compTones.length }}</button>
+          <button class="strictButton" v-on:click="toggleStrict" v-bind:class="{ strict: strict }">{{ strictLabel }}</button>
       </div>
       <div id="bottom-row">
-        <button @mousedown="toneButtonPushed(2)" v-bind:class="{ pushed: but2Pushed }" id="but-2" class="tone-button"></button>
-        <button @mousedown="toneButtonPushed(3)" v-bind:class="{ pushed: but3Pushed }" id="but-3" class="tone-button"></button>
+        <i class="fa fa-arrow-left but-2" v-bind:class="{ active: pushed2 }" aria-hidden="true" @mousedown="toneButtonPushed(2)"></i>
+        <i class="fa fa-arrow-left but-3" v-bind:class="{ active: pushed3 }" aria-hidden="true" @mousedown="toneButtonPushed(3)"></i>
       </div>
+      <h1>{{ msg }}</h1>
     </div>
     <audio ref="simonSound0" src="/static/simonSound0.mp3"></audio>
     <audio ref="simonSound1" src="/static/simonSound1.mp3"></audio>
@@ -34,12 +33,13 @@ export default {
       playerTone: 0,
       compTurn: true,
       intervalID: '',
-      but0Pushed: false,
-      but1Pushed: false,
-      but2Pushed: false,
-      but3Pushed: false,
       strict: false,
-      winLevel: 3
+      winLevel: 20,
+      pushed0: false,
+      pushed1: false,
+      pushed2: false,
+      pushed3: false,
+      msg: ''
     }
   },
   computed: {
@@ -58,8 +58,10 @@ export default {
           this.$refs[toneName].play()
           if (this.playerTone === this.compTones.length - 1) {
             if (this.compTones.length === this.winLevel) {
-              alert('YOU WIN!')
-              this.initGame()
+              this.msg = 'YOU WIN!!!!'
+              setTimeout(() => {
+                this.initGame()
+              }, 2500)
             } else this.toggleTurn()
           } else {
             this.playerTone++
@@ -83,6 +85,7 @@ export default {
       this.initGame()
     },
     initGame: function () {
+      this.msg = ''
       this.compTones = []
       this.playerTurn = 0
       this.compTurn = true
@@ -97,10 +100,10 @@ export default {
     },
     showTone: function (tone) {
       const toneName = 'simonSound' + tone.value.toString()
-      this.toneToggle(tone.value)
+      this['pushed' + tone.value.toString()] = true
       this.$refs[toneName].play()
       setTimeout(() => {
-        this.toneToggle(tone.value)
+        this['pushed' + tone.value.toString()] = false
       }, 500)
       if (tone.done === true) {
         this.stopTones()
@@ -129,16 +132,13 @@ export default {
     },
     stopTones: function () {
       clearInterval(this.intervalID)
-    },
-    toneToggle: function (tone) {
-      const butProp = 'but' + tone + 'Pushed'
-      this[butProp] ? this[butProp] = false : this[butProp] = true
     }
   }
 }
 </script>
 
 <style>
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -148,37 +148,141 @@ export default {
   margin-top: 60px;
 }
 
-#but-0 {
-  background-color: red;
+#bottom-row {
+  font-size: 140px;
 }
 
-#but-1 {
-  background-color: blue;
-}
-
-#but-2 {
-  background-color: green;
-}
-
-#but-3 {
-  background-color: yellow;
-}
-
-.tone-button {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+button {
   border: none;
-  box-shadow: 10px 10px 20px black;
-  margin: 20px;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 2px;
+  font-size: 1.25em;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:focus {
   outline: none;
 }
 
-.pushed {
-  box-shadow: 3px 3px 8px black;
+button:active {
+  filter: brightness(50%);
 }
 
-.tone-button:active {
-  box-shadow: 3px 3px 8px black;
+.but-0 {
+  transform: rotate(90deg);
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  color: #A8A429;
 }
+
+.but-0.active {
+  color: #FFF700 !important;
+}
+
+.but-0:active {
+  color: #FFF700;
+}
+
+.but-1 {
+  transform: rotate(180deg);
+  position: absolute;
+  left: 190px;
+  top: 0px;
+  color: #B23D2B;
+}
+
+.but-1:active {
+  color: #E81F00;
+}
+
+.but-1.active {
+  color: #E81F00 !important;
+}
+
+.but-2 {
+  transform: rotate(0deg);
+  position: absolute;
+  left: 0px;
+  top: 190px;
+  color: #222B8C;
+}
+
+.but-2:active {
+  color: #0015FF;
+}
+
+.but-2.active {
+  color: #0015FF !important;
+}
+
+.but-3 {
+  transform: rotate(270deg);
+  position: absolute;
+  left: 180px;
+  top: 200px;
+  color: #1C9420;
+}
+
+.but-3:active {
+  color: #0CE813;
+}
+
+.but-3.active {
+  color: #0CE813 !important;
+}
+
+#game {
+  width: 320px;
+  text-align: center;
+  height: 320px;
+  position: relative;
+}
+
+h1 {
+  text-align: center;
+  position: absolute;
+  top: 320px;
+  left: 70px;
+}
+
+i:hover {
+  cursor: pointer;
+}
+
+.level {
+  background-color: white;
+  font-size: 3em;
+}
+
+#middle-row {
+  border-width: medium;
+  border-style: solid;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 80px;
+  top: 90px;
+}
+
+.strictButton {
+  background-color: #0CE813;
+}
+
+.strictButton.strict {
+  background-color: #E81F00;
+}
+
+#top-row {
+  font-size: 140px;
+}
+
 </style>
