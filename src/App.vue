@@ -2,16 +2,16 @@
   <div id="app">
     <div id="game">
       <div id="top-row">
-        <div @mousedown="toneButtonPushed(0)"><icon name="arrow-left" class="icon but-0" v-bind:class="{ active: pushed0 }"></icon></div>
-        <div @mousedown="toneButtonPushed(1)"><icon name="arrow-left" class="icon but-1" v-bind:class="{ active: pushed1 }"></icon></div>
+        <div @mousedown="toneButtonPushed(0)"><icon scale="9" name="arrow-left" class="icon but-0" v-bind:class="{ active: pushed0 }"></icon></div>
+        <div @mousedown="toneButtonPushed(1)"><icon scale="9" name="arrow-left" class="icon but-1" v-bind:class="{ active: pushed1 }"></icon></div>
       </div>
       <div id="middle-row">
           <button class="level" v-on:click="initGame">{{ compTones.length }}</button>
           <button class="strictButton" v-on:click="toggleStrict" v-bind:class="{ strict: strict }">{{ strictLabel }}</button>
       </div>
       <div id="bottom-row">
-        <div @mousedown="toneButtonPushed(2)"><icon name="arrow-left" class="icon but-2" v-bind:class="{ active: pushed2 }"></icon></div>
-        <div @mousedown="toneButtonPushed(3)"><icon name="arrow-left" class="icon but-3" v-bind:class="{ active: pushed3 }"></icon></div>
+        <div @mousedown="toneButtonPushed(2)"><icon scale="9" name="arrow-left" class="icon but-2" v-bind:class="{ active: pushed2 }"></icon></div>
+        <div @mousedown="toneButtonPushed(3)"><icon scale="9" name="arrow-left" class="icon but-3" v-bind:class="{ active: pushed3 }"></icon></div>
       </div>
       <h1>{{ msg }}</h1>
       <a href="https://github.com/CliffSmith25/simon">View the source code here</a>
