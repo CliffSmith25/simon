@@ -16,11 +16,11 @@
       <h1>{{ msg }}</h1>
       <a href="https://github.com/CliffSmith25/simon">View the source code here</a>
     </div>
-    <audio ref="simonSound0" src="/static/simonSound0.mp3"></audio>
-    <audio ref="simonSound1" src="/static/simonSound1.mp3"></audio>
-    <audio ref="simonSound2" src="/static/simonSound2.mp3"></audio>
-    <audio ref="simonSound3" src="/static/simonSound3.mp3"></audio>
-    <audio ref="wrong" src="/static/wrong.mp3"></audio>
+    <audio ref="simonSound0" src="static/simonSound0.mp3"></audio>
+    <audio ref="simonSound1" src="static/simonSound1.mp3"></audio>
+    <audio ref="simonSound2" src="static/simonSound2.mp3"></audio>
+    <audio ref="simonSound3" src="static/simonSound3.mp3"></audio>
+    <audio ref="wrong" src="static/wrong.mp3"></audio>
   </div>
 </template>
 
