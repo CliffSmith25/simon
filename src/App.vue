@@ -2,16 +2,16 @@
   <div id="app">
     <div id="game">
       <div id="top-row">
-        <div @mousedown="toneButtonPushed(0)"><icon scale="9" name="arrow-left" class="icon but-0" v-bind:class="{ active: pushed0 }"></icon></div>
-        <div @mousedown="toneButtonPushed(1)"><icon scale="9" name="arrow-left" class="icon but-1" v-bind:class="{ active: pushed1 }"></icon></div>
+        <div @mousedown="toneButtonPushed(0)"><icon scale="27" name="arrow-left" class="icon but-0" v-bind:class="{ active: pushed0 }"></icon></div>
+        <div @mousedown="toneButtonPushed(1)"><icon scale="27" name="arrow-left" class="icon but-1" v-bind:class="{ active: pushed1 }"></icon></div>
       </div>
       <div id="middle-row">
           <button class="level" v-on:click="initGame">{{ compTones.length }}</button>
           <button class="strictButton" v-on:click="toggleStrict" v-bind:class="{ strict: strict }">{{ strictLabel }}</button>
       </div>
       <div id="bottom-row">
-        <div @mousedown="toneButtonPushed(2)"><icon scale="9" name="arrow-left" class="icon but-2" v-bind:class="{ active: pushed2 }"></icon></div>
-        <div @mousedown="toneButtonPushed(3)"><icon scale="9" name="arrow-left" class="icon but-3" v-bind:class="{ active: pushed3 }"></icon></div>
+        <div @mousedown="toneButtonPushed(2)"><icon scale="27" name="arrow-left" class="icon but-2" v-bind:class="{ active: pushed2 }"></icon></div>
+        <div @mousedown="toneButtonPushed(3)"><icon scale="27" name="arrow-left" class="icon but-3" v-bind:class="{ active: pushed3 }"></icon></div>
       </div>
       <h1>{{ msg }}</h1>
       <a href="https://github.com/CliffSmith25/simon">View the source code here</a>
@@ -148,8 +148,8 @@ export default {
 a {
   text-align: center;
   position: absolute;
-  top: 380px;
-  left: 70px;  
+  top: 950px;
+  left: 350px;  
 }
 
 #app {
@@ -159,21 +159,19 @@ a {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-#bottom-row {
-  font-size: 140px;
+  display: flex;
+  justify-content: center;
 }
 
 button {
   border: none;
   border-radius: 50%;
-  width: 70px;
-  height: 70px;
+  width: 140px;
+  height: 140px;
   margin-left: 10px;
   margin-right: 10px;
   margin-top: 2px;
-  font-size: 1.25em;
+  font-size: 3em;
 }
 
 button:hover {
@@ -207,7 +205,7 @@ button:active {
 .but-1 {
   transform: rotate(180deg);
   position: absolute;
-  left: 190px;
+  left: 500px;
   top: 0px;
   color: #B23D2B;
 }
@@ -224,7 +222,7 @@ button:active {
   transform: rotate(0deg);
   position: absolute;
   left: 0px;
-  top: 190px;
+  top: 500px;
   color: #222B8C;
 }
 
@@ -239,8 +237,8 @@ button:active {
 .but-3 {
   transform: rotate(270deg);
   position: absolute;
-  left: 180px;
-  top: 200px;
+  left: 500px;
+  top: 500px;
   color: #1C9420;
 }
 
@@ -254,21 +252,22 @@ button:active {
 
 .fa-icon {
   width: auto;
-  height: 140px;
+  height: 420px;
 }
 
 #game {
-  width: 320px;
+  width: 900px;
   text-align: center;
-  height: 320px;
+  height: 900px;
   position: relative;
 }
 
 h1 {
   text-align: center;
   position: absolute;
-  top: 320px;
-  left: 70px;
+  font-size: 6em;
+  top: 900px;
+  left: 150px;
 }
 
 .icon:hover {
@@ -277,18 +276,18 @@ h1 {
 
 .level {
   background-color: white;
-  font-size: 3em;
+  font-size: 6em;
 }
 
 #middle-row {
   border-width: medium;
   border-style: solid;
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 300px;
+  height: 300px;
   position: absolute;
-  left: 80px;
-  top: 90px;
+  left: 280px;
+  top: 300px;
 }
 
 .strictButton {
